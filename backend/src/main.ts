@@ -15,6 +15,12 @@ function ensureUploadDirs() {
 }
 
 async function bootstrap() {
+  // TEMP DEBUG — remove once the Railway env var issue is confirmed fixed.
+  for (const key of ['DB_HOST', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD', 'DB_DATABASE', 'JWT_SECRET', 'JWT_EXPIRES_IN', 'PORT']) {
+    const val = process.env[key];
+    console.log(`[ENV DEBUG] ${key}: present=${val !== undefined} length=${val?.length ?? 0}`);
+  }
+
   ensureUploadDirs();
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
