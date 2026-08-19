@@ -1,0 +1,156 @@
+.headerTitle {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: var(--space-4);
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  max-width: 480px;
+}
+
+.statTile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-4);
+}
+
+.statTileHighlight {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+}
+
+.statTileHighlight .statValue {
+  color: var(--color-primary-dark);
+}
+
+.statValue {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.sectionAvgGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  max-width: 720px;
+}
+
+@media (min-width: 640px) {
+  .sectionAvgGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.sectionAvgTile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+}
+
+.sectionAvgValue {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.sectionAvgLabel {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.tableHeader {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+}
+
+.sectionRow td {
+  background: var(--color-bg);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.questionTable td:nth-child(2) {
+  white-space: normal;
+  min-width: 260px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  margin-bottom: var(--space-4);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-3);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: var(--space-6) var(--space-4);
+}
+
+.commentHeader {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+}
+
+.commentList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 640px;
+}
+
+.commentCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.commentText {
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.commentMeta {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  align-self: flex-end;
+}

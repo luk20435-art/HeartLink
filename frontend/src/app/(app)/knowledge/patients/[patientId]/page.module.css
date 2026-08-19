@@ -1,0 +1,43 @@
+.menuList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 560px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  text-align: left;
+  width: 100%;
+  border: none;
+}
+
+.menuIcon {
+  flex: none;
+  color: var(--color-primary);
+  display: flex;
+}
+
+.menuIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.menuLabel {
+  flex: 1;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.menuChevron {
+  flex: none;
+  color: var(--color-text-muted);
+}
+
+.menuChevron svg {
+  width: 18px;
+  height: 18px;
+}

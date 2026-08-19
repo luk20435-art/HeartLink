@@ -1,0 +1,237 @@
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.backLink svg {
+  width: 16px;
+  height: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.headerTitle {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.formCard {
+  margin-bottom: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 640px;
+}
+
+.itemRow {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemRowMain {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: left;
+  padding: var(--space-2);
+}
+
+.thumbWrap {
+  position: relative;
+  flex: none;
+  width: 96px;
+  height: 68px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+}
+
+.thumbFallback svg {
+  width: 24px;
+  height: 24px;
+}
+
+.playBadge {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  color: var(--color-primary);
+  display: flex;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+}
+
+.playBadge svg {
+  width: 22px;
+  height: 22px;
+}
+
+.rowBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rowTitle {
+  font-weight: 700;
+  font-size: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rowDesc {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rowChevron {
+  flex: none;
+  color: var(--color-text-muted);
+}
+
+.rowChevron svg {
+  width: 18px;
+  height: 18px;
+}
+
+.deleteBtn {
+  align-self: flex-end;
+  margin-top: 4px;
+  padding: 2px var(--space-2);
+  font-size: 12px;
+  color: var(--color-danger);
+  background: none;
+  border: none;
+}
+
+.itemTitle {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.itemDesc {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: var(--space-6) var(--space-4);
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.82);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  z-index: 200;
+}
+
+.modalClose {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalClose svg {
+  width: 20px;
+  height: 20px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: min(90vw, 720px);
+  max-height: 90vh;
+}
+
+.modalImg {
+  max-width: 100%;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.modalVideoWrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #000;
+}
+
+.modalVideoFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.modalCaption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: center;
+  color: #fff;
+}
+
+.modalCaption .itemDesc {
+  color: rgba(255, 255, 255, 0.75);
+}

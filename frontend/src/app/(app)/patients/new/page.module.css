@@ -1,0 +1,22 @@
+.desktopPanel {
+}
+
+@media (min-width: 480px) {
+  .desktopPanel {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-6) var(--space-6) var(--space-5);
+  }
+
+  .desktopPanel :global(.card) {
+    max-width: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    background: transparent;
+  }
+}
