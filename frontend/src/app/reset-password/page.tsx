@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { confirmPasswordReset } from "@/lib/auth";
@@ -8,6 +8,14 @@ import { EyeIcon, EyeOffIcon, HeartPulseLogo, HeartbeatDivider } from "@/compone
 import styles from "../auth.module.css";
 
 export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={null}>
+      <ResetPasswordForm />
+    </Suspense>
+  );
+}
+
+function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const identifier = searchParams.get("identifier") ?? "";
