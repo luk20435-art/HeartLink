@@ -20,12 +20,11 @@ const SELF_CARE_LABEL: Record<string, string> = {
   needs_improvement: 'พฤติกรรมการดูแลตนเองต้องปรับปรุง',
 };
 
-/** Same verdict wording as SELF_CARE_LABEL — visit 4 has no self-care question of its
- * own, so the client's template derives the same verdict from the final DTX/FPG category. */
-const DTX_VERDICT_LABEL: Record<string, string> = {
-  normal: 'พฤติกรรมการดูแลตนเองดี',
-  at_risk: 'พฤติกรรมการดูแลตนเองต้องปรับปรุง',
-  suspected: 'พฤติกรรมการดูแลตนเองต้องปรับปรุง',
+/** Final (visit 4) DTX/FPG category, with the client template's exact mg/dL ranges. */
+const DTX_CATEGORY_LABEL: Record<string, string> = {
+  normal: 'ปกติ (<100 mg/dl)',
+  at_risk: 'เสี่ยง (=100-125 mg/dl)',
+  suspected: 'สงสัยป่วย (>=126 mg/dl)',
 };
 
 /** Fixed per-deployment values — this instance serves one specific service unit. */
@@ -59,10 +58,9 @@ function twoQResult(r: HealthRecord | undefined): string {
   return r.q1Depressed || r.q2Anhedonia ? 'มีความเสี่ยง' : 'ไม่มี';
 }
 
-/** Behavior verdict derived from the final (visit 4) DTX/FPG category. */
-function dtxBehaviorVerdict(r: HealthRecord | undefined): string {
+function dtxResultLabel(r: HealthRecord | undefined): string {
   if (!r || !r.dtxCategory) return '';
-  return DTX_VERDICT_LABEL[r.dtxCategory];
+  return DTX_CATEGORY_LABEL[r.dtxCategory];
 }
 
 const FILL = {
@@ -287,7 +285,7 @@ export function buildPatientsWorkbook(
       s4_waist: v4?.waistCm ?? '',
       s4_cvdScore: v4?.cvdScore ?? '',
       s4_riskLevel: v4?.cvdRiskLevel ? RISK_LEVEL_LABEL[v4.cvdRiskLevel] : '',
-      s4_dtxDelta: dtxBehaviorVerdict(v4),
+      s4_dtxDelta: dtxResultLabel(v4),
     };
     row.eachCell({ includeEmpty: true }, (cell) => {
       cell.border = THIN_BORDER;

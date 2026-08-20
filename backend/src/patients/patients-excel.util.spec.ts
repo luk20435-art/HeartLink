@@ -127,28 +127,28 @@ describe('buildPatientsWorkbook', () => {
     expect(sheet.getRow(4).getCell(17).value).toBe('');
   });
 
-  it('reports "พฤติกรรมการดูแลตนเองดี" when the final DTX/FPG is back to normal', () => {
+  it('reports "ปกติ (<100 mg/dl)" when the final DTX/FPG is normal', () => {
     const patient = makePatient();
     const v4 = makeRecord({ visitNumber: 4, dtxCategory: 'normal' as any });
     const sheet = buildPatientsWorkbook([patient], [v4]).worksheets[0];
-    expect(sheet.getRow(4).getCell(35).value).toBe('พฤติกรรมการดูแลตนเองดี'); // s4_dtxDelta
+    expect(sheet.getRow(4).getCell(35).value).toBe('ปกติ (<100 mg/dl)'); // s4_dtxDelta
   });
 
-  it('reports "พฤติกรรมการดูแลตนเองต้องปรับปรุง" when the final DTX/FPG is still at_risk', () => {
+  it('reports "เสี่ยง (=100-125 mg/dl)" when the final DTX/FPG is at_risk', () => {
     const patient = makePatient();
     const v4 = makeRecord({ visitNumber: 4, dtxCategory: 'at_risk' as any });
     const sheet = buildPatientsWorkbook([patient], [v4]).worksheets[0];
-    expect(sheet.getRow(4).getCell(35).value).toBe('พฤติกรรมการดูแลตนเองต้องปรับปรุง');
+    expect(sheet.getRow(4).getCell(35).value).toBe('เสี่ยง (=100-125 mg/dl)');
   });
 
-  it('reports "พฤติกรรมการดูแลตนเองต้องปรับปรุง" when the final DTX/FPG is suspected', () => {
+  it('reports "สงสัยป่วย (>=126 mg/dl)" when the final DTX/FPG is suspected', () => {
     const patient = makePatient();
     const v4 = makeRecord({ visitNumber: 4, dtxCategory: 'suspected' as any });
     const sheet = buildPatientsWorkbook([patient], [v4]).worksheets[0];
-    expect(sheet.getRow(4).getCell(35).value).toBe('พฤติกรรมการดูแลตนเองต้องปรับปรุง');
+    expect(sheet.getRow(4).getCell(35).value).toBe('สงสัยป่วย (>=126 mg/dl)');
   });
 
-  it('leaves the verdict blank when visit 4 has no DTX/FPG category yet', () => {
+  it('leaves the result blank when visit 4 has no DTX/FPG category yet', () => {
     const patient = makePatient();
     const v1 = makeRecord({ visitNumber: 1, dtxFpg: 100 });
     const sheet = buildPatientsWorkbook([patient], [v1]).worksheets[0];
