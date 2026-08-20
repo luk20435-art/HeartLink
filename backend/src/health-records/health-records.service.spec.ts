@@ -139,7 +139,7 @@ describe('HealthRecordsService', () => {
     const v1 = await service.save(
       'p1',
       1,
-      { visitDate: '2024-01-01', selfCareBehavior: 'improved' } as any,
+      { visitDate: '2024-01-01', selfCareBehavior: 'good' } as any,
       user,
     );
     expect(v1.selfCareBehavior).toBeNull();
@@ -147,10 +147,10 @@ describe('HealthRecordsService', () => {
     const v3 = await service.save(
       'p1',
       3,
-      { visitDate: '2024-03-01', selfCareBehavior: 'improved' } as any,
+      { visitDate: '2024-03-01', selfCareBehavior: 'good' } as any,
       user,
     );
-    expect(v3.selfCareBehavior).toBe('improved');
+    expect(v3.selfCareBehavior).toBe('good');
   });
 
   it('classifies post-behavior DTX category only on visit 4', async () => {

@@ -3,18 +3,29 @@ import { Patient } from './patient.entity';
 import { PatientStatus } from './patient-status.enum';
 import { HealthRecord } from '../health-records/health-record.entity';
 
-/** Short labels matching the client's report template (distinct from the app's own "เสี่ยง..." UI labels). */
+/**
+ * Labels matching the client's report template. The template only defines 3 risk
+ * buckets, so 'high' and 'very_high' (the app's own finer-grained 4-tier badge)
+ * both collapse to the same "เสี่ยงสูง (>20%)" text here.
+ */
 const RISK_LEVEL_LABEL: Record<string, string> = {
-  low: 'ต่ำ',
-  medium: 'ปานกลาง',
-  high: 'สูง',
-  very_high: 'สูงมาก',
+  low: 'เสี่ยงน้อย (<10%)',
+  medium: 'เสี่ยงปานกลาง (10%-20%)',
+  high: 'เสี่ยงสูง (>20%)',
+  very_high: 'เสี่ยงสูง (>20%)',
 };
 
 const SELF_CARE_LABEL: Record<string, string> = {
-  improved: 'ดีขึ้น',
-  same: 'เหมือนเดิม',
-  worse: 'แย่ลง',
+  good: 'พฤติกรรมการดูแลตนเองดี',
+  needs_improvement: 'พฤติกรรมการดูแลตนเองต้องปรับปรุง',
+};
+
+/** Same verdict wording as SELF_CARE_LABEL — visit 4 has no self-care question of its
+ * own, so the client's template derives the same verdict from the final DTX/FPG category. */
+const DTX_VERDICT_LABEL: Record<string, string> = {
+  normal: 'พฤติกรรมการดูแลตนเองดี',
+  at_risk: 'พฤติกรรมการดูแลตนเองต้องปรับปรุง',
+  suspected: 'พฤติกรรมการดูแลตนเองต้องปรับปรุง',
 };
 
 /** Fixed per-deployment values — this instance serves one specific service unit. */
@@ -48,13 +59,10 @@ function twoQResult(r: HealthRecord | undefined): string {
   return r.q1Depressed || r.q2Anhedonia ? 'มีความเสี่ยง' : 'ไม่มี';
 }
 
-/** "ลดลง N" / "เพิ่มขึ้น N" / "คงเดิม" — change in DTX/FPG from baseline (visit 1) to the final re-assessment (visit 4). */
-function dtxDelta(baseline: HealthRecord | undefined, final: HealthRecord | undefined): string {
-  if (!baseline || !final || baseline.dtxFpg == null || final.dtxFpg == null) return '';
-  const delta = baseline.dtxFpg - final.dtxFpg;
-  if (delta > 0) return `ลดลง ${delta}`;
-  if (delta < 0) return `เพิ่มขึ้น ${Math.abs(delta)}`;
-  return 'คงเดิม';
+/** Behavior verdict derived from the final (visit 4) DTX/FPG category. */
+function dtxBehaviorVerdict(r: HealthRecord | undefined): string {
+  if (!r || !r.dtxCategory) return '';
+  return DTX_VERDICT_LABEL[r.dtxCategory];
 }
 
 const FILL = {
@@ -279,7 +287,7 @@ export function buildPatientsWorkbook(
       s4_waist: v4?.waistCm ?? '',
       s4_cvdScore: v4?.cvdScore ?? '',
       s4_riskLevel: v4?.cvdRiskLevel ? RISK_LEVEL_LABEL[v4.cvdRiskLevel] : '',
-      s4_dtxDelta: dtxDelta(v1, v4),
+      s4_dtxDelta: dtxBehaviorVerdict(v4),
     };
     row.eachCell({ includeEmpty: true }, (cell) => {
       cell.border = THIN_BORDER;

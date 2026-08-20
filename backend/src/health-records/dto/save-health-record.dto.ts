@@ -35,8 +35,8 @@ export class SaveHealthRecordDto {
   dtxFpg?: number;
 
   @IsOptional()
-  @IsIn(['improved', 'same', 'worse'])
-  selfCareBehavior?: 'improved' | 'same' | 'worse';
+  @IsIn(['good', 'needs_improvement'])
+  selfCareBehavior?: 'good' | 'needs_improvement';
 
   @IsOptional()
   @IsString()

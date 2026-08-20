@@ -204,7 +204,7 @@ function VisitForm({
   existing: HealthRecord | null;
   onSaved: (record: HealthRecord) => void;
 }) {
-  const hasSelfCare = visitNumber >= 2;
+  const hasSelfCare = visitNumber === 2 || visitNumber === 3;
   const has2Q = visitNumber === 1;
 
   const blank = {
@@ -215,7 +215,7 @@ function VisitForm({
     heartRate: "",
     waistCm: "",
     dtxFpg: "",
-    selfCareBehavior: "same" as SelfCareBehavior,
+    selfCareBehavior: "good" as SelfCareBehavior,
     notes: "",
     q1Depressed: false,
     q2Anhedonia: false,

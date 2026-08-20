@@ -10,7 +10,7 @@ import {
 import { Patient } from '../patients/patient.entity';
 import { CvdRiskLevel, DtxCategory } from './cvd-risk.util';
 
-export type SelfCareBehavior = 'improved' | 'same' | 'worse';
+export type SelfCareBehavior = 'good' | 'needs_improvement';
 
 @Entity()
 @Unique(['patientId', 'visitNumber'])

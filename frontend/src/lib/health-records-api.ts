@@ -2,7 +2,7 @@ import { apiGet, apiPut } from "./api-client";
 
 export type CvdRiskLevel = "low" | "medium" | "high" | "very_high";
 export type DtxCategory = "normal" | "at_risk" | "suspected";
-export type SelfCareBehavior = "improved" | "same" | "worse";
+export type SelfCareBehavior = "good" | "needs_improvement";
 
 export interface HealthRecord {
   id: string;
@@ -67,9 +67,8 @@ export const DTX_CATEGORY_LABEL: Record<DtxCategory, string> = {
 };
 
 export const SELF_CARE_LABEL: Record<SelfCareBehavior, string> = {
-  improved: "ดีขึ้น",
-  same: "เหมือนเดิม",
-  worse: "แย่ลง",
+  good: "พฤติกรรมการดูแลตนเองดี",
+  needs_improvement: "พฤติกรรมการดูแลตนเองต้องปรับปรุง",
 };
 
 export const VISIT_LABEL: Record<number, string> = {

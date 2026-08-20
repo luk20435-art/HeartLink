@@ -127,42 +127,46 @@ describe('buildPatientsWorkbook', () => {
     expect(sheet.getRow(4).getCell(17).value).toBe('');
   });
 
-  it('reports a DTX/FPG decrease from baseline to the final visit as "ลดลง N"', () => {
+  it('reports "พฤติกรรมการดูแลตนเองดี" when the final DTX/FPG is back to normal', () => {
     const patient = makePatient();
-    const v1 = makeRecord({ visitNumber: 1, dtxFpg: 125 });
-    const v4 = makeRecord({ visitNumber: 4, dtxFpg: 110 });
-    const sheet = buildPatientsWorkbook([patient], [v1, v4]).worksheets[0];
-    expect(sheet.getRow(4).getCell(35).value).toBe('ลดลง 15'); // s4_dtxDelta
+    const v4 = makeRecord({ visitNumber: 4, dtxCategory: 'normal' as any });
+    const sheet = buildPatientsWorkbook([patient], [v4]).worksheets[0];
+    expect(sheet.getRow(4).getCell(35).value).toBe('พฤติกรรมการดูแลตนเองดี'); // s4_dtxDelta
   });
 
-  it('reports a DTX/FPG increase as "เพิ่มขึ้น N"', () => {
+  it('reports "พฤติกรรมการดูแลตนเองต้องปรับปรุง" when the final DTX/FPG is still at_risk', () => {
     const patient = makePatient();
-    const v1 = makeRecord({ visitNumber: 1, dtxFpg: 100 });
-    const v4 = makeRecord({ visitNumber: 4, dtxFpg: 120 });
-    const sheet = buildPatientsWorkbook([patient], [v1, v4]).worksheets[0];
-    expect(sheet.getRow(4).getCell(35).value).toBe('เพิ่มขึ้น 20');
+    const v4 = makeRecord({ visitNumber: 4, dtxCategory: 'at_risk' as any });
+    const sheet = buildPatientsWorkbook([patient], [v4]).worksheets[0];
+    expect(sheet.getRow(4).getCell(35).value).toBe('พฤติกรรมการดูแลตนเองต้องปรับปรุง');
   });
 
-  it('reports no change as "คงเดิม"', () => {
+  it('reports "พฤติกรรมการดูแลตนเองต้องปรับปรุง" when the final DTX/FPG is suspected', () => {
     const patient = makePatient();
-    const v1 = makeRecord({ visitNumber: 1, dtxFpg: 100 });
-    const v4 = makeRecord({ visitNumber: 4, dtxFpg: 100 });
-    const sheet = buildPatientsWorkbook([patient], [v1, v4]).worksheets[0];
-    expect(sheet.getRow(4).getCell(35).value).toBe('คงเดิม');
+    const v4 = makeRecord({ visitNumber: 4, dtxCategory: 'suspected' as any });
+    const sheet = buildPatientsWorkbook([patient], [v4]).worksheets[0];
+    expect(sheet.getRow(4).getCell(35).value).toBe('พฤติกรรมการดูแลตนเองต้องปรับปรุง');
   });
 
-  it('leaves the delta blank when either baseline or final DTX/FPG is missing', () => {
+  it('leaves the verdict blank when visit 4 has no DTX/FPG category yet', () => {
     const patient = makePatient();
     const v1 = makeRecord({ visitNumber: 1, dtxFpg: 100 });
     const sheet = buildPatientsWorkbook([patient], [v1]).worksheets[0];
     expect(sheet.getRow(4).getCell(35).value).toBe('');
   });
 
-  it('translates risk level to the short client-template labels, not the app UI labels', () => {
+  it('translates risk level to the client-template labels with percent ranges, not the app UI labels', () => {
     const patient = makePatient();
     const v1 = makeRecord({ visitNumber: 1, cvdRiskLevel: 'high' as any });
     const sheet = buildPatientsWorkbook([patient], [v1]).worksheets[0];
-    expect(sheet.getRow(4).getCell(16).value).toBe('สูง'); // s1_riskLevel, not "เสี่ยงสูง"
+    expect(sheet.getRow(4).getCell(16).value).toBe('เสี่ยงสูง (>20%)'); // s1_riskLevel, not "เสี่ยงสูง"
+  });
+
+  it('collapses very_high into the same "เสี่ยงสูง (>20%)" bucket as high, since the template only has 3 tiers', () => {
+    const patient = makePatient();
+    const v1 = makeRecord({ visitNumber: 1, cvdRiskLevel: 'very_high' as any });
+    const sheet = buildPatientsWorkbook([patient], [v1]).worksheets[0];
+    expect(sheet.getRow(4).getCell(16).value).toBe('เสี่ยงสูง (>20%)');
   });
 
   it('places each patient in a separate row with a sequential row number, one row per patient regardless of visit count', () => {
