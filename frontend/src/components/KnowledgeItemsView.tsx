@@ -185,7 +185,7 @@ export function KnowledgeItemsView({
       )}
 
       <div className={styles.list}>
-        {items.map((item, idx) => {
+        {items.map((item) => {
           const embedUrl = item.videoUrl ? youtubeEmbedUrl(item.videoUrl) : null;
           const videoId = embedUrl?.split("/embed/")[1];
           const thumbSrc =
@@ -225,9 +225,7 @@ export function KnowledgeItemsView({
                   )}
                 </span>
                 <span className={styles.rowBody}>
-                  <span className={styles.rowTitle}>
-                    {idx + 1}. {item.title}
-                  </span>
+                  <span className={styles.rowTitle}>{item.title}</span>
                   {item.description && <span className={styles.rowDesc}>{item.description}</span>}
                 </span>
                 <span className={styles.rowChevron}>

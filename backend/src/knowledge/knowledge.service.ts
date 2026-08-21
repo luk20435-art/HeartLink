@@ -14,7 +14,7 @@ export class KnowledgeService {
   ) {}
 
   findAll() {
-    return this.repo.find({ order: { createdAt: 'DESC' } });
+    return this.repo.find({ order: { createdAt: 'ASC' } });
   }
 
   create(dto: CreateKnowledgeDto, imageUrl: string | null, user: User) {
